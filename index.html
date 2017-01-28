@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="user-scalable=no,width=device-width,initial-scale=1.0,maximum-scale=1, minimum-scale=1,height=device-height, target-densitydpi=device-dpi" />
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <link rel="apple-touch-icon" href="images/icon.png"/> <!-- icon.png 57x57; icon@2x.png 114x114 -->
+    <link rel="shortcut icon"    href="images/favicon.ico"/>
+
+    <title>Create Cryptograms</title>
+    <!--                                                                  -->
+    <!-- Given a clear-text input, create a cryptogram                    -->
+    <!--                                                                  -->
+    <!-- George Fisher January 2017                                       -->
+    <!--                                                                  -->
+
+    <!-- jQuery -->
+    <script src="js/jquery-latest.min.js"></script>
+
+    <!-- Twitter Bootstrap -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+
+    <!-- download csv file -->
+    <script src="js/download.js"></script> <!-- js:http://js.zapjs.com/js/download.js docs:http://danml.com/download.html -->
+
+    <!-- web app manifest support -->
+    <script src="js/manup.js"></script>
+    <link rel="manifest" href="manifest.json" />
+
+    <!-- PHONEGAP -->
+    <meta name="format-detection"            content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
+    <!-- Good default declaration:
+    * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+    * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+    * Disables use of eval() and inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+        * Enable inline JS: add 'unsafe-inline' to default-src
+        * Enable eval(): add 'unsafe-eval' to default-src
+    * Create your own at http://cspisawesome.com
+    -->
+    <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
+
+    <link rel="stylesheet" type="text/css" href="css/index.css" />
+    <!-- PHONEGAP -->
+
+
+    <style>
+        body {
+            background-image: url("images/ibm_360_color.jpg");
+            background-color: #cccccc;
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+
+        input {
+            text-align: center;
+        }
+
+        td {
+            padding-left: 10px;
+        }
+
+    </style>
+</head>
+
+<body onload="setTimeout(function() { window.scrollTo(0, 1) }, 100);">
+
+<div class="container">
+    <!--           -->
+    <!-- Main Page -->
+    <!--           -->
+    <section id="main-page">
+
+        <h2 style="text-align: center;font-weight: bold;">Create Cryptograms</h2>
+
+        <!-- table of the alphabet and crypto-counterparts -->
+        <table style="background-color: #FF9900;font-family: 'Courier New', 'sans serif';font-weight: bold;font-size: large;margin-bottom: 5px;">
+            <tr>
+                <td>A<input type="text" name="A" id="A" class="letters" size="1" maxlength=1 value=""></td>
+                <td>B<input type="text" name="B" id="B" class="letters" size="1" maxlength=1 value=""></td>
+                <td>C<input type="text" name="C" id="C" class="letters" size="1" maxlength=1 value=""></td>
+                <td>D<input type="text" name="D" id="D" class="letters" size="1" maxlength=1 value=""></td>
+                <td>E<input type="text" name="E" id="E" class="letters" size="1" maxlength=1 value=""></td>
+                <td>F<input type="text" name="F" id="F" class="letters" size="1" maxlength=1 value=""></td>
+                <td>G<input type="text" name="G" id="G" class="letters" size="1" maxlength=1 value=""></td>
+            </tr>
+            <tr>
+                <td>H<input type="text" name="H" id="H" class="letters" size="1" maxlength=1 value=""></td>
+                <td>I<input type="text" name="I" id="I" class="letters" size="1" maxlength=1 value=""></td>
+                <td>J<input type="text" name="J" id="J" class="letters" size="1" maxlength=1 value=""></td>
+                <td>K<input type="text" name="K" id="K" class="letters" size="1" maxlength=1 value=""></td>
+                <td>L<input type="text" name="L" id="L" class="letters" size="1" maxlength=1 value=""></td>
+                <td>M<input type="text" name="M" id="M" class="letters" size="1" maxlength=1 value=""></td>
+                <td>N<input type="text" name="N" id="N" class="letters" size="1" maxlength=1 value=""></td>
+            </tr>
+            <tr>
+                <td>O<input type="text" name="O" id="O" class="letters" size="1" maxlength=1 value=""></td>
+                <td>P<input type="text" name="P" id="P" class="letters" size="1" maxlength=1 value=""></td>
+                <td>Q<input type="text" name="Q" id="Q" class="letters" size="1" maxlength=1 value=""></td>
+                <td>R<input type="text" name="R" id="R" class="letters" size="1" maxlength=1 value=""></td>
+                <td>S<input type="text" name="S" id="S" class="letters" size="1" maxlength=1 value=""></td>
+                <td>T<input type="text" name="T" id="T" class="letters" size="1" maxlength=1 value=""></td>
+                <td>U<input type="text" name="U" id="U" class="letters" size="1" maxlength=1 value=""></td>
+            </tr>
+            <tr>
+                <td>V<input type="text" name="V" id="V" class="letters" size="1" maxlength=1 value=""></td>
+                <td>W<input type="text" name="W" id="W" class="letters" size="1" maxlength=1 value=""></td>
+                <td>X<input type="text" name="X" id="X" class="letters" size="1" maxlength=1 value=""></td>
+                <td>Y<input type="text" name="Y" id="Y" class="letters" size="1" maxlength=1 value=""></td>
+                <td>Z<input type="text" name="Z" id="Z" class="letters" size="1" maxlength=1 value=""></td>
+            </tr>
+        </table>
+
+        <!-- clear-text input box -->
+        <div class="form-group">
+            <label for="cleartext" style="color: black;background-color: white;padding: 2px;">Enter the phrase to be
+                encrypted in the box below:</label>
+            <textarea class="form-control" rows="10" id="cleartext"
+                      style="background-color: rgba(255,255,255,0.5);border: 5px solid black;" autofocus></textarea>
+        </div>
+
+        <!-- buttons -->
+        <div class="form-group  col-xs-12">
+            <fieldset>
+                <input type="button" style="font-weight: bold;" id="encrypt-btn" value="Encrypt">
+                <input type="button" style="font-weight: bold;" id="clear-btn" value="Clear Encryption">
+                <input type="button" style="font-weight: bold;" id="clearall-btn" value="Clear All">
+            </fieldset>
+        </div>
+
+        <!-- encrypted result -->
+        <div class="form-group">
+            <label for="encrypted" style="color: black;background-color: white;padding: 2px;">Crytogram:</label>
+            <textarea class="form-control" rows="10" id="encrypted"
+                      style="background-color: transparent;border: 5px solid black;"></textarea>
+        </div>
+
+        <!-- download button -->
+        <div id="download-btn-div" style="display: none;">
+            <button id="download-btn" style="font-weight: bold;color: blue;">Download cryptogram to a file</button>
+            <input type="text" name="download-title" id="download-title" value=""
+                   placeholder="file name (optional)"
+                   style="color: black;font-family: 'Courier New', Courier, monospace;margin-bottom: 5px;">
+            <br>
+        </div>
+
+    </section>
+
+</div>
+
+<!-- PHONEGAP -->
+<script type="text/javascript" src="cordova.js"></script>
+<script type="text/javascript" src="js/index.js"></script>
+<script type="text/javascript">
+    app.initialize();
+</script>
+<!-- PHONEGAP -->
+
+<script>
+    // Clear button
+    $('#clear-btn').click(function () {
+        $('.letters').val('');
+        //$('#cleartext').val('');
+        $('#encrypted').val('');
+        download_button_div.hide();download_txt = '';document.getElementById("download-title").value = '';
+    });
+
+    // Clear All button
+    $('#clearall-btn').click(function () {
+        $('.letters').val('');
+        $('#cleartext').val('');
+        $('#encrypted').val('');
+        download_button_div.hide();download_txt = '';document.getElementById("download-title").value = '';
+    });
+
+    // give the clear-text input box a white background on click or keydown or paste
+    $('#cleartext').click(function () {
+        $(this).css({backgroundColor: 'white'});
+    });
+    $('#cleartext').keydown(function () {
+        $(this).css({backgroundColor: 'white'});
+    });
+    $('#cleartext').on('paste', function () {
+        $(this).css({backgroundColor: 'white'});
+    });
+
+    // Encrypt button
+    $('#encrypt-btn').click(function () {
+        // set the encrypted result box a white background
+        $('#encrypted').css({backgroundColor: 'white'});
+
+        // create a dictionary for all the letters
+        var lettermap = {};
+        lettermap["A"] = document.getElementById('A').value.toUpperCase();
+        lettermap["B"] = document.getElementById('B').value.toUpperCase();
+        lettermap["C"] = document.getElementById('C').value.toUpperCase();
+        lettermap["D"] = document.getElementById('D').value.toUpperCase();
+        lettermap["E"] = document.getElementById('E').value.toUpperCase();
+        lettermap["F"] = document.getElementById('F').value.toUpperCase();
+        lettermap["G"] = document.getElementById('G').value.toUpperCase();
+        lettermap["H"] = document.getElementById('H').value.toUpperCase();
+        lettermap["I"] = document.getElementById('I').value.toUpperCase();
+        lettermap["J"] = document.getElementById('J').value.toUpperCase();
+        lettermap["K"] = document.getElementById('K').value.toUpperCase();
+        lettermap["L"] = document.getElementById('L').value.toUpperCase();
+        lettermap["M"] = document.getElementById('M').value.toUpperCase();
+        lettermap["N"] = document.getElementById('N').value.toUpperCase();
+        lettermap["O"] = document.getElementById('O').value.toUpperCase();
+        lettermap["P"] = document.getElementById('P').value.toUpperCase();
+        lettermap["Q"] = document.getElementById('Q').value.toUpperCase();
+        lettermap["R"] = document.getElementById('R').value.toUpperCase();
+        lettermap["S"] = document.getElementById('S').value.toUpperCase();
+        lettermap["T"] = document.getElementById('T').value.toUpperCase();
+        lettermap["U"] = document.getElementById('U').value.toUpperCase();
+        lettermap["V"] = document.getElementById('V').value.toUpperCase();
+        lettermap["W"] = document.getElementById('W').value.toUpperCase();
+        lettermap["X"] = document.getElementById('X').value.toUpperCase();
+        lettermap["Y"] = document.getElementById('Y').value.toUpperCase();
+        lettermap["Z"] = document.getElementById('Z').value.toUpperCase();
+
+        // use this array to figure out which letters were set by the user
+        var letters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
+
+        // loop through letter input boxes to see if any have been set by the user
+        // remove those letters from 'letters'
+        var i = -1;
+        for (var letr in lettermap) {
+            i++;
+            if (lettermap[letr].length == 0 || !lettermap[letr].trim()) {
+                continue;
+            } else {
+                delete letters[i];
+            }
+        }
+
+        // remove blanks in 'letters'
+        letters = letters.join('').split('');
+
+        // shuffle 'letters'
+        function shuffle(array) {
+            var counter = array.length;
+
+            // While there are elements in the array
+            while (counter > 0) {
+                // Pick a random index
+                var index = Math.floor(Math.random() * counter);
+
+                // Decrease counter by 1
+                counter--;
+
+                // And swap the last element with it
+                var temp = array[counter];
+                array[counter] = array[index];
+                array[index] = temp;
+            }
+
+            return array;
+        }
+
+        letters = shuffle(letters);
+
+        // look at what will be pop-ed next
+        function peek(array) {
+            return array[array.length-1]
+        }
+
+        // put the letter map up on the screen
+        for (var letr in lettermap) {
+            if (lettermap[letr].length == 0 || !lettermap[letr].trim()) {
+
+                // we're not allowed to encrypt a letter to itself
+                // so if that's about to happen, shuffle again
+                while (letr == peek(letters)) {
+                    letters = shuffle(letters);
+                }
+
+                // map the letter to its encrypted version
+                lettermap[letr] = letters.pop();
+            }
+        }
+
+        $('#A').val(lettermap["A"]);
+        $('#B').val(lettermap["B"]);
+        $('#C').val(lettermap["C"]);
+        $('#D').val(lettermap["D"]);
+        $('#E').val(lettermap["E"]);
+        $('#F').val(lettermap["F"]);
+        $('#G').val(lettermap["G"]);
+        $('#H').val(lettermap["H"]);
+        $('#I').val(lettermap["I"]);
+        $('#J').val(lettermap["J"]);
+        $('#K').val(lettermap["K"]);
+        $('#L').val(lettermap["L"]);
+        $('#M').val(lettermap["M"]);
+        $('#N').val(lettermap["N"]);
+        $('#O').val(lettermap["O"]);
+        $('#P').val(lettermap["P"]);
+        $('#Q').val(lettermap["Q"]);
+        $('#R').val(lettermap["R"]);
+        $('#S').val(lettermap["S"]);
+        $('#T').val(lettermap["T"]);
+        $('#U').val(lettermap["U"]);
+        $('#V').val(lettermap["V"]);
+        $('#W').val(lettermap["W"]);
+        $('#X').val(lettermap["X"]);
+        $('#Y').val(lettermap["Y"]);
+        $('#Z').val(lettermap["Z"]);
+
+        // encrypt the clear-text input
+        var cleartext = document.getElementById('cleartext').value.toUpperCase();
+        var encryptext = '';
+        for (var x = 0; x < cleartext.length; x++) {
+            var c = cleartext.charAt(x);
+            if (c.match(/[a-z]/i)) {
+                encryptext = encryptext.concat(lettermap[c]);
+            } else {
+                encryptext = encryptext.concat(c);
+            }
+            //alert(c);
+        }
+        $('#encrypted').val(encryptext);
+
+        // collect plain & encrypted text
+        download_txt = "---PLAIN TEXT---\r\n";
+        download_txt = download_txt + document.getElementById('cleartext').value;
+        download_txt = download_txt + "\r\n---ENCRYPTED TEXT---\r\n";
+        download_txt = download_txt + encryptext;
+
+        // display the download button
+        download_button_div.show();
+
+    });
+
+    // =======================================================================
+    // DOWNLOAD BUTTON
+    // =======================================================================
+
+    var download_button_div = $('#download-btn-div');
+    var download_button     = $('#download-btn');
+    var download_title      = $('#download-title');
+    var download_txt        = '';
+    download_button.click(function () {
+        var title = "crypto";
+        if (download_title.val().trim().length  > 0) {
+            title = document.getElementById("download-title").value
+        }
+        download(download_txt, title + ".txt", "text/plain");
+    });
+
+</script>
+
+
+</body>
+</html>
